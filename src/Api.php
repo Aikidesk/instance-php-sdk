@@ -25,35 +25,56 @@ class Api
     private $oauthResources;
 
     /**
-     * @var \Aikidesk\SDK\Instance\Resources\Users
+     * @var \Aikidesk\SDK\Instance\Resources\Customers
      */
-    private $usersResources;
+    private $customersResources;
 
     /**
-     * @var \Aikidesk\SDK\Instance\Resources\Instances
+     * @var \Aikidesk\SDK\Instance\Resources\Staff
      */
-    private $instancesResources;
+    private $staffResources;
+
+    /**
+     * @var \Aikidesk\SDK\Instance\Resources\Departments
+     */
+    private $departmentsResources;
+
+    /**
+     * @var \Aikidesk\SDK\Instance\Resources\Stats
+     */
+    private $statsResources;
+
+    /**
+     * @var \Aikidesk\SDK\Instance\Resources\Settings
+     */
+    private $settingsResources;
 
     /**
      * Api constructor.
      * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     * @param null $oauthResources
-     * @param null $usersResources
-     * @param null $instancesResources
+     * @param null $customersResources
+     * @param null $staffResources
+     * @param null $departmentsResources
+     * @param null $statsResources
+     * @param null $settingsResources
      */
     public function __construct(
         RequestInterface $request,
-        $oauthResources = null,
-        $usersResources = null,
-        $instancesResources = null
+        $customersResources = null,
+        $staffResources = null,
+        $departmentsResources = null,
+        $statsResources = null,
+        $settingsResources = null
     ) {
         $this->request = $request;
-        $this->oauthResources = $oauthResources ?: new \Aikidesk\SDK\Instance\Resources\OAuth($this->request);
-        $this->usersResources = $usersResources ?: new \Aikidesk\SDK\Instance\Resources\Users(null, $this->request);
-        $this->instancesResources = $instancesResources ?: new \Aikidesk\SDK\Instance\Resources\Instances(null, null, $this->request);
-//        $this->sessionResources = $sessionResources ?: new \Aikidesk\SDK\Instance\Resources\Sessions(null, $this->request);
-//        $this->roomResources = $roomResources ?: new \Aikidesk\SDK\Instance\Resources\Rooms(null, $this->request);
-//        $this->userResources = $userResources ?: new \Aikidesk\SDK\Instance\Resources\Users(null, $this->request);
+        $this->customersResources = $customersResources ?: new \Aikidesk\SDK\Instance\Resources\Customers(null, null,
+            null,
+            $this->request);
+        $this->staffResources = $staffResources ?: new \Aikidesk\SDK\Instance\Resources\Staff(null, $this->request);
+        $this->settingsResources = $settingsResources ?: new \Aikidesk\SDK\Instance\Resources\Settings($this->request);
+        $this->departmentsResources = $departmentsResources ?: new \Aikidesk\SDK\Instance\Resources\Departments(null,
+            $this->request);
+        $this->statsResources = $statsResources ?: new \Aikidesk\SDK\Instance\Resources\Stats($this->request);
     }
 
     /**
@@ -100,33 +121,52 @@ class Api
     }
 
     /**
-     * @return \Aikidesk\SDK\Instance\Resources\OAuth
+     * @return \Aikidesk\SDK\Instance\Resources\Settings
      */
-    public function oauth()
+    public function setting()
     {
-        return $this->oauthResources;
+        return $this->settingsResources;
     }
 
     /**
-     * @param int|null $userId
-     * @return \Aikidesk\SDK\Instance\Resources\Users
+     * @param int|null $customerId
+     * @return \Aikidesk\SDK\Instance\Resources\Customers
      */
-    public function users($userId = null)
+    public function customer($customerId = null)
     {
-        $this->usersResources->setId($userId);
+        $this->customersResources->setId($customerId);
 
-        return $this->usersResources;
+        return $this->customersResources;
     }
 
     /**
-     * @param int|null $instanceId
-     * @return \Aikidesk\SDK\Instance\Resources\Instances
+     * @param int|null $departmentId
+     * @return \Aikidesk\SDK\Instance\Resources\Departments
      */
-    public function instances($instanceId = null)
+    public function department($departmentId = null)
     {
-        $this->instancesResources->setId($instanceId);
+        $this->departmentsResources->setId($departmentId);
 
-        return $this->instancesResources;
+        return $this->departmentsResources;
+    }
+
+    /**
+     * @param int|null $staffId
+     * @return \Aikidesk\SDK\Instance\Resources\Staff
+     */
+    public function staff($staffId = null)
+    {
+        $this->staffResources->setId($staffId);
+
+        return $this->staffResources;
+    }
+
+    /**
+     * @return \Aikidesk\SDK\Instance\Resources\Stats
+     */
+    public function stats()
+    {
+        return $this->statsResources;
     }
 
     /**

@@ -89,7 +89,7 @@ class ApiTokens
             'client_id' => $oauthId,
             'client_secret' => $oauthSecret,
             'grant_type' => 'client_credentials',
-            'state' => 'PhEbakeb4azeqAtUPrewabuxUwruqahA',
+            'state' => 'PhEbakeb4azeqAtUPrewabuxUwruqahB',
             'scope' => implode(',', $scopes),
         ];
 
