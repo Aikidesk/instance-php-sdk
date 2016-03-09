@@ -36,6 +36,11 @@ class Response implements ResponseInterface, ArrayAccess
     protected $responseCode;
 
     /**
+     * @var string
+     */
+    protected $plainBody;
+
+    /**
      * Response constructor.
      */
     public function __construct()
@@ -190,5 +195,21 @@ class Response implements ResponseInterface, ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->data[$offset]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainBody()
+    {
+        return $this->plainBody;
+    }
+
+    /**
+     * @param string $plainBody
+     */
+    public function setPlainBody($plainBody)
+    {
+        $this->plainBody = $plainBody;
     }
 }

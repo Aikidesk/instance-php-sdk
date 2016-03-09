@@ -6,6 +6,7 @@ use Aikidesk\SDK\Instance\Contracts\RequestInterface;
 use Aikidesk\SDK\Instance\Response;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -70,7 +71,8 @@ class GuzzleV6 implements RequestInterface
             }
             $response = $this->client->send($request, $options);
         } catch (TransferException $e) {
-            VarDumper::dump((string) $e->getResponse()->getBody());
+            VarDumper::dump((string)$e->getResponse()->getBody());
+            VarDumper::dump((string)$request->getUri());
             if ($e->getResponse() !== null and $e->getResponse()->getBody() !== null) {
                 $json_exception = json_encode($e->getResponse()->getBody(), true);
                 if ($json_exception === false) {
@@ -120,6 +122,7 @@ class GuzzleV6 implements RequestInterface
         $return->setRateLimit($response->getHeader('X-RateLimit-Limit'));
         $return->setRateRemaining($response->getHeader('X-RateLimit-Remaining'));
         $return->setRateReset($response->getHeader('X-RateLimit-Reset'));
+        $return->setPlainBody($response->getBody()->getContents());
         $return->setData(json_decode($response->getBody(), true));
         $return->setResponseCode($response->getStatusCode());
 
@@ -135,9 +138,16 @@ class GuzzleV6 implements RequestInterface
     public function post($uri, $queryParams = array(), $headers = array())
     {
         $options = [];
-        $options['json'] = $queryParams;
 
-        $request = new Request('POST', $uri, ['Accept' => 'application/json']);
+        $body = null;
+        if (isset($queryParams['multipart'])) {
+            $body = new MultipartStream($queryParams['multipart']);
+            unset($queryParams['multipart']);
+        } else {
+            $options['json'] = $queryParams;
+        }
+
+        $request = new Request('POST', $uri, array_merge(['Accept' => 'application/json'], $headers), $body);
         $rawResponse = $this->processResponse($request, $options);
 
         return $this->returnResponseObject($rawResponse);
