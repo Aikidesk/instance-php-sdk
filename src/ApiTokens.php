@@ -3,7 +3,7 @@ namespace Aikidesk\SDK\Instance;
 
 use Aikidesk\SDK\Instance\Contracts\RequestInterface;
 
-class ApiTokens
+class ApiTokens implements InstanceSdkApiTokensInterface
 {
     /**
      * @var string
@@ -19,6 +19,16 @@ class ApiTokens
      * @var \Aikidesk\SDK\Instance\Contracts\RequestInterface|null
      */
     protected $request = null;
+
+    /**
+     * @var string|null
+     */
+    private $oauthClientId = null;
+
+    /**
+     * @var string|null
+     */
+    private $oauthClientSecret = null;
 
     /**
      * ApiTokens constructor.
@@ -53,7 +63,7 @@ class ApiTokens
                 throw new \Aikidesk\SDK\Instance\Exceptions\UnauthorizedException($msg, $code, $url, $meta);
                 break;
             case 403:
-                throw new \Aikidesk\WWW\Exceptions\ForbiddenException($msg, $code, $url, $meta);
+                throw new \Aikidesk\SDK\Instance\Exceptions\ForbiddenException($msg, $code, $url, $meta);
                 break;
             case 404:
                 throw new \Aikidesk\SDK\Instance\Exceptions\NotFoundException($msg, $code, $url, $meta);
@@ -78,22 +88,102 @@ class ApiTokens
     }
 
     /**
-     * @param string $oauthId
-     * @param string $oauthSecret
      * @param array $scopes
-     * @return \Aikidesk\SDK\Instance\Contracts\Resp
+     * @return \Aikidesk\SDK\WWW\Contracts\Resp
      */
-    public function createClientCredentialsToken($oauthId, $oauthSecret, $scopes = [])
+    public function createClientCredentialsToken($scopes = [])
     {
+        $oauthId = $this->getOauthClientId();
+        $oauthSecret = $this->getOauthClientSecret();
+
         $postFormData = [
             'client_id' => $oauthId,
             'client_secret' => $oauthSecret,
             'grant_type' => 'client_credentials',
-            'state' => 'PhEbakeb4azeqAtUPrewabuxUwruqahB',
+            'state' => 'PhEbakeb4azeqAtUPrewabuxUwruqahA',
             'scope' => implode(',', $scopes),
         ];
 
         return $this->request->post('oauth/client_credentials', $postFormData);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getOauthClientId()
+    {
+        return $this->oauthClientId;
+    }
+
+    /**
+     * @param null|string $oauthClientId
+     */
+    public function setOauthClientId($oauthClientId)
+    {
+        $this->oauthClientId = $oauthClientId;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getOauthClientSecret()
+    {
+        return $this->oauthClientSecret;
+    }
+
+    /**
+     * @param null|string $oauthClientSecret
+     */
+    public function setOauthClientSecret($oauthClientSecret)
+    {
+        $this->oauthClientSecret = $oauthClientSecret;
+    }
+
+    /**
+     * @param string $email
+     * @param string $password
+     * @param array $scopes
+     * @return \Aikidesk\SDK\WWW\Contracts\ResponseInterface
+     */
+    public function createPasswordFlowToken($email, $password, $scopes = [])
+    {
+        if (count($scopes) <= 0) {
+            $scopes[] = 'www_login';
+        }
+        $oauthId = $this->getOauthClientId();
+        $oauthSecret = $this->getOauthClientSecret();
+
+        $postFormData = [
+            'client_id' => $oauthId,
+            'client_secret' => $oauthSecret,
+            'grant_type' => 'password',
+            'username' => $email,
+            'password' => $password,
+            'state' => 'PhEbakeb4azeqAtUPrewabuxUwruqahA',
+            'scope' => implode(',', $scopes),
+        ];
+
+        return $this->request->post('oauth/password_flow', $postFormData);
+    }
+
+    /**
+     * @param string $refreshToken
+     * @return \Aikidesk\SDK\WWW\Contracts\ResponseInterface
+     */
+    public function createRefreshToken($refreshToken)
+    {
+        $oauthId = $this->getOauthClientId();
+        $oauthSecret = $this->getOauthClientSecret();
+
+        $postFormData = [
+            'client_id' => $oauthId,
+            'client_secret' => $oauthSecret,
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshToken,
+            'state' => 'PhEbakeb4azeqAtUPrewabuxUwruqahA',
+        ];
+
+        return $this->request->post('oauth/refresh_token', $postFormData);
     }
 
     /**

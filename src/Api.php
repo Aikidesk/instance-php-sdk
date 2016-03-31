@@ -3,7 +3,7 @@ namespace Aikidesk\SDK\Instance;
 
 use Aikidesk\SDK\Instance\Contracts\RequestInterface;
 
-class Api
+class Api implements InstanceSdkApiInterface
 {
     /**
      * @var string
@@ -57,6 +57,7 @@ class Api
      * @param null $departmentsResources
      * @param null $statsResources
      * @param null $settingsResources
+     * @param null $oauthResources
      */
     public function __construct(
         RequestInterface $request,
@@ -64,7 +65,8 @@ class Api
         $staffResources = null,
         $departmentsResources = null,
         $statsResources = null,
-        $settingsResources = null
+        $settingsResources = null,
+        $oauthResources = null
     ) {
         $this->request = $request;
         $this->customersResources = $customersResources ?: new \Aikidesk\SDK\Instance\Resources\Customers(null, null,
@@ -75,6 +77,7 @@ class Api
         $this->departmentsResources = $departmentsResources ?: new \Aikidesk\SDK\Instance\Resources\Departments(null,
             $this->request);
         $this->statsResources = $statsResources ?: new \Aikidesk\SDK\Instance\Resources\Stats($this->request);
+        $this->oauthResources = $oauthResources ?: new \Aikidesk\SDK\Instance\Resources\OAuth(null, $this->request);
     }
 
     /**
@@ -167,6 +170,14 @@ class Api
     public function stats()
     {
         return $this->statsResources;
+    }
+
+    /**
+     * @return \Aikidesk\SDK\Instance\Resources\OAuth
+     */
+    public function oauth($oauthId = null)
+    {
+        return $this->oauthResources;
     }
 
     /**

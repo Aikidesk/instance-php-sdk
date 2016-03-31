@@ -26,6 +26,11 @@ class Response implements ResponseInterface, ArrayAccess
     protected $rateReset;
 
     /**
+     * @var string
+     */
+    protected $plainBody;
+
+    /**
      * @var mixed|array
      */
     protected $data;
@@ -36,9 +41,10 @@ class Response implements ResponseInterface, ArrayAccess
     protected $responseCode;
 
     /**
-     * @var string
+     * Array with http responce codes which indicate OK
+     * @var array
      */
-    protected $plainBody;
+    protected $ok_http_codes = [200, 201, 202, 204];
 
     /**
      * Response constructor.
@@ -112,6 +118,19 @@ class Response implements ResponseInterface, ArrayAccess
     }
 
     /**
+     * If response is among OK status codes
+     * @return bool
+     */
+    public function isOk()
+    {
+        if (in_array($this->getResponseCode(), $this->ok_http_codes)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @return mixed
      */
     public function getResponseCode()
@@ -125,6 +144,22 @@ class Response implements ResponseInterface, ArrayAccess
     public function setResponseCode($responseCode)
     {
         $this->responseCode = $responseCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainBody()
+    {
+        return $this->plainBody;
+    }
+
+    /**
+     * @param string $plainBody
+     */
+    public function setPlainBody($plainBody)
+    {
+        $this->plainBody = $plainBody;
     }
 
     /**
@@ -195,21 +230,5 @@ class Response implements ResponseInterface, ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->data[$offset]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getPlainBody()
-    {
-        return $this->plainBody;
-    }
-
-    /**
-     * @param string $plainBody
-     */
-    public function setPlainBody($plainBody)
-    {
-        $this->plainBody = $plainBody;
     }
 }
