@@ -33,6 +33,12 @@ interface InstanceSdkApiInterface
     public function stats();
 
     /**
+     * @param int|null $ticketId
+     * @return \Aikidesk\SDK\Instance\Resources\Tickets
+     */
+    public function ticket($ticketId = null);
+
+    /**
      * @param string $access_token
      */
     public function setAccessToken($access_token);

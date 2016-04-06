@@ -89,7 +89,7 @@ class ApiTokens implements InstanceSdkApiTokensInterface
 
     /**
      * @param array $scopes
-     * @return \Aikidesk\SDK\WWW\Contracts\Resp
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function createClientCredentialsToken($scopes = [])
     {
@@ -143,7 +143,7 @@ class ApiTokens implements InstanceSdkApiTokensInterface
      * @param string $email
      * @param string $password
      * @param array $scopes
-     * @return \Aikidesk\SDK\WWW\Contracts\ResponseInterface
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function createPasswordFlowToken($email, $password, $scopes = [])
     {
@@ -168,7 +168,7 @@ class ApiTokens implements InstanceSdkApiTokensInterface
 
     /**
      * @param string $refreshToken
-     * @return \Aikidesk\SDK\WWW\Contracts\ResponseInterface
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function createRefreshToken($refreshToken)
     {

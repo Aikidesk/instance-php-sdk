@@ -5,13 +5,13 @@ interface InstanceSdkApiTokensInterface
 {
 
     /**
-     * @return \Aikidesk\SDK\WWW\Contracts\ResponseInterface
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function current();
 
     /**
      * @param array $scopes
-     * @return \Aikidesk\SDK\WWW\Contracts\Resp
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function createClientCredentialsToken($scopes = []);
 
@@ -19,13 +19,13 @@ interface InstanceSdkApiTokensInterface
      * @param string $email
      * @param string $password
      * @param array $scopes
-     * @return \Aikidesk\SDK\WWW\Contracts\ResponseInterface
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function createPasswordFlowToken($email, $password, $scopes = []);
 
     /**
      * @param string $refreshToken
-     * @return \Aikidesk\SDK\WWW\Contracts\ResponseInterface
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function createRefreshToken($refreshToken);
 

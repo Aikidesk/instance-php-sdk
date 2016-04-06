@@ -113,7 +113,7 @@ class CustomersEmails
             $input['with'] = $optional['with'];
         }
 
-        return $this->request->get(sprintf('customer/%1d/email/%2d', $customerId, $emailId), $input);
+        return $this->request->get(sprintf('customer/%1d/email/%1d', $customerId, $emailId), $input);
     }
 
     /**
