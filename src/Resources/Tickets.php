@@ -123,14 +123,13 @@ class Tickets
      * @param int $department
      * @param array $optional
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
-     * @internal param string $name
-     * @internal param string $email
      */
     public function create($topic, $text, $department, $optional = [])
     {
         $input = [];
         $input['topic'] = $topic;
         $input['text'] = $text;
+        $input['department'] = $department;
         $input['priority'] = 0;
 
         if (isset($optional['priority'])) {

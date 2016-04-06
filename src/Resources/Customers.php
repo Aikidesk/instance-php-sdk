@@ -264,6 +264,19 @@ class Customers
     }
 
     /**
+     * Scopes: role_operator, role_owner, role_admin
+     *
+     * @param string $email
+     *
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
+     * @throws \Aikidesk\SDK\Instance\Exceptions\ApiException
+     */
+    public function searchByEmail($email)
+    {
+        return $this->request->get('customer/email', ['email' => $email]);
+    }
+
+    /**
      * Scopes: role_operator, role_owner, role_admin, customer_autologin
      *
      * @param int|null $autologinId
