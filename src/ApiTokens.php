@@ -50,6 +50,7 @@ class ApiTokens implements InstanceSdkApiTokensInterface
      * @throws \Aikidesk\SDK\Instance\Exceptions\InternalServerErrorException
      * @throws \Aikidesk\SDK\Instance\Exceptions\NotFoundException
      * @throws \Aikidesk\SDK\Instance\Exceptions\ServerValidationException
+     * @throws \Aikidesk\SDK\Instance\Exceptions\BadGatewayException
      * @throws \Aikidesk\SDK\Instance\Exceptions\ServerUnavailableException
      * @throws \Aikidesk\SDK\Instance\Exceptions\UnauthorizedException
      */
@@ -70,6 +71,9 @@ class ApiTokens implements InstanceSdkApiTokensInterface
                 break;
             case 500:
                 throw new \Aikidesk\SDK\Instance\Exceptions\InternalServerErrorException($msg, $code, $url, $meta);
+                break;
+            case 502:
+                throw new \Aikidesk\SDK\Instance\Exceptions\BadGatewayException($msg, $code, $url, $meta);
                 break;
             case 503:
                 throw new \Aikidesk\SDK\Instance\Exceptions\ServerUnavailableException($msg, $code, $url, $meta);

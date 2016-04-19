@@ -8,7 +8,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * Class GuzzleV6
@@ -71,15 +70,13 @@ class GuzzleV6 implements RequestInterface
             }
             $response = $this->client->send($request, $options);
         } catch (TransferException $e) {
-            VarDumper::dump((string)$e->getResponse()->getBody());
-            VarDumper::dump((string)$request->getUri());
-            if ($e->getResponse() !== null and $e->getResponse()->getBody() !== null) {
-                $json_exception = json_encode($e->getResponse()->getBody(), true);
-                if ($json_exception === false) {
-                    return null;
-                }
-                $httpCode = $e->getResponse()->getStatusCode();
-                $errorMsg = '';
+            $httpCode = $e->getResponse()->getStatusCode();
+            $errorMsg = '';
+            $json_exception = json_encode($e->getResponse()->getBody(), true);
+            if ($json_exception === false) {
+                $httpCode = $e->getCode();
+                $errorMsg = $e->getMessage();
+            } else {
                 if (isset($json_exception['error_message'])) {
                     $errorMsg = $json_exception['error_message'];
                 } else {
@@ -87,10 +84,11 @@ class GuzzleV6 implements RequestInterface
                         $errorMsg = $json_exception['error'];
                     }
                 }
-                Api::throwException($httpCode, $errorMsg, $request->getUri());
-//                VarDumper::dump((string)$e->getResponse()->getBody());
-                exit;
             }
+
+            Api::throwException($httpCode, $errorMsg, $request->getUri(),
+                ['body' => (string)$e->getResponse()->getBody()]);
+            exit;
         }
 
         return $response;

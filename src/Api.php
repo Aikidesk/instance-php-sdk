@@ -100,7 +100,7 @@ class Api implements InstanceSdkApiInterface
      * @throws \Aikidesk\SDK\Instance\Exceptions\InternalServerErrorException
      * @throws \Aikidesk\SDK\Instance\Exceptions\NotFoundException
      * @throws \Aikidesk\SDK\Instance\Exceptions\ServerValidationException
-     * @throws \Aikidesk\SDK\WWW\Exceptions\BadGatewayException
+     * @throws \Aikidesk\SDK\Instance\Exceptions\BadGatewayException
      * @throws \Aikidesk\SDK\Instance\Exceptions\ServerUnavailableException
      * @throws \Aikidesk\SDK\Instance\Exceptions\UnauthorizedException
      */
