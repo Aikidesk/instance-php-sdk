@@ -85,7 +85,7 @@ class Api implements InstanceSdkApiInterface
             $this->request);
         $this->statsResources = $statsResources ?: new \Aikidesk\SDK\Instance\Resources\Stats($this->request);
         $this->oauthResources = $oauthResources ?: new \Aikidesk\SDK\Instance\Resources\OAuth(null, $this->request);
-        $this->ticketsResources = $ticketsResources ?: new \Aikidesk\SDK\Instance\Resources\Tickets(null,
+        $this->ticketsResources = $ticketsResources ?: new \Aikidesk\SDK\Instance\Resources\Tickets(null, null,
             $this->request);
     }
 

@@ -211,4 +211,21 @@ class Staff
 
         return $this->request->put('staff/mass', $input);
     }
+
+    /**
+     * Scopes: role_owner, role_admin
+     *
+     * @param array $optional
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
+     */
+    public function invites($optional = [])
+    {
+        $input = [];
+
+        if (isset($optional['page'])) {
+            $input['page'] = $optional['page'];
+        }
+
+        return $this->request->get('staff/invite', $input);
+    }
 }

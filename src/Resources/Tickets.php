@@ -15,6 +15,11 @@ class Tickets
     protected $id = null;
 
     /**
+     * @var \Aikidesk\SDK\Instance\Resources\TicketsMessages
+     */
+    private $ticketsMessagesResources;
+
+    /**
      * @var \Aikidesk\SDK\Instance\Contracts\RequestInterface
      */
     private $request;
@@ -22,12 +27,15 @@ class Tickets
     /**
      * Tickets constructor.
      * @param int|null $ticketId
+     * @param null $ticketMessageResources
      * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
      */
-    public function __construct($ticketId = null, RequestInterface $request)
+    public function __construct($ticketId = null, $ticketMessageResources = null, RequestInterface $request)
     {
         $this->setId($ticketId);
         $this->request = $request;
+        $this->ticketsMessagesResources = $ticketMessageResources ?: new \Aikidesk\SDK\Instance\Resources\TicketsMessages(null,
+            null, $this->request);
     }
 
     /**
@@ -224,7 +232,7 @@ class Tickets
 
     /**
      * Scopes: role_operator, role_owner, role_admin
-     * @TODO: TBD
+     *
      * @param string $action
      * @param array $ids
      * @param array $data
@@ -233,7 +241,52 @@ class Tickets
     public function mass($action, $ids, $data = [])
     {
         $input = [];
+        $input['action'] = $action;
+        $input['ids'] = $ids;
+        $input['data'] = [];
+
+        if (isset($data['status'])) {
+            $input['data']['status'] - $data['status'];
+        }
+
+        if (isset($data['priority'])) {
+            $input['data']['priority'] - $data['priority'];
+        }
+
+        if (isset($data['department'])) {
+            $input['data']['department'] - $data['department'];
+        }
+
+        if (isset($data['tags_add'])) {
+            $input['data']['tags_add'] - $data['tags_add'];
+        }
+
+        if (isset($data['tags_remove'])) {
+            $input['data']['tags_remove'] - $data['tags_remove'];
+        }
+
+        if (isset($data['staff_add'])) {
+            $input['data']['staff_add'] - $data['staff_add'];
+        }
+
+        if (isset($data['staff_remove'])) {
+            $input['data']['staff_remove'] - $data['staff_remove'];
+        }
 
         return $this->request->put('ticket/mass', $input);
+    }
+
+    /**
+     * Scopes: role_customer, role_operator, role_owner, role_admin
+     *
+     * @param int|null $messageId
+     * @return \Aikidesk\SDK\Instance\Resources\TicketsMessages
+     */
+    public function message($messageId = null)
+    {
+        $this->ticketsMessagesResources->setTicketId($this->getId());
+        $this->ticketsMessagesResources->setMessageId($messageId);
+
+        return $this->ticketsMessagesResources;
     }
 }
