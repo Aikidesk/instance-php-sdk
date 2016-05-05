@@ -114,6 +114,10 @@ class Customers
             $input['timezone'] = $optional['timezone'];
         }
 
+        if (isset($optional['locale'])) {
+            $input['locale'] = $optional['locale'];
+        }
+
         if (isset($optional['organization'])) {
             $input['organization'] = $optional['organization'];
         }
