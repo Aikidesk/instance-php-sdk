@@ -96,6 +96,18 @@ class Staff
         $input['email'] = $email;
         $input['role'] = $role;
 
+        if (isset($optional['departments'])) {
+            $input['departments'] = $optional['departments'];
+        }
+
+        if (isset($optional['departments_add_public'])) {
+            $input['departments_add_public'] = $optional['departments_add_public'];
+        }
+
+        if (isset($optional['departments_add_private'])) {
+            $input['departments_add_private'] = $optional['departments_add_private'];
+        }
+
         return $this->request->post('staff', $input);
     }
 
