@@ -310,4 +310,18 @@ class Customers
 
         return $this->request->post(sprintf('customer/%1d/oauth/grant/internal', $customerId), $input);
     }
+
+    /**
+     * Scopes: www
+     *
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
+     */
+    public function activate()
+    {
+        $customerId = $this->getId();
+        $input = [];
+        $input['activate'] = true;
+
+        return $this->request->post(sprintf('customer/%1d/activate', $customerId), $input);
+    }
 }
