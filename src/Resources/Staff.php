@@ -108,6 +108,10 @@ class Staff
             $input['departments_add_private'] = $optional['departments_add_private'];
         }
 
+        if (isset($optional['expireAfter'])) {
+            $input['expireAfter'] = $optional['expireAfter'];
+        }
+
         return $this->request->post('staff', $input);
     }
 
