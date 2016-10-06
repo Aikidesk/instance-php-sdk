@@ -95,6 +95,14 @@ class Departments
             $input['smtpType'] = $optional['smtpType'];
         }
 
+        if (isset($optional['visibility'])) {
+            $input['visibility'] = $optional['visibility'];
+        }
+
+        if (isset($optional['slas'])) {
+            $input['slas'] = $optional['slas'];
+        }
+
         return $this->request->post('department', $input);
     }
 
