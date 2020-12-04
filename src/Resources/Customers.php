@@ -156,10 +156,11 @@ class Customers
     /**
      * Scopes: role_operator, role_admin, role_owner
      *
+     * @param string $name
      * @param array $data
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
-    public function update($data = [])
+    public function update($name, $data = [])
     {
         $customerId = $this->getId();
         $input = [];
