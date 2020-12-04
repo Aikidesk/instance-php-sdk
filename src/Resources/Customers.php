@@ -2,6 +2,7 @@
 namespace Aikidesk\SDK\Instance\Resources;
 
 use Aikidesk\SDK\Instance\Contracts\RequestInterface;
+use function sprintf;
 
 /**
  * Class Customers
@@ -122,6 +123,10 @@ class Customers
             $input['organization'] = $optional['organization'];
         }
 
+        if (isset($optional['address'])) {
+            $input['address'] = $optional['address'];
+        }
+
         if (isset($optional['sendPassword'])) {
             $input['sendPassword'] = $optional['sendPassword'];
         }
@@ -144,6 +149,38 @@ class Customers
         }
 
         return $this->request->get(sprintf('customer/%1d', $customerId), $input);
+    }
+
+
+
+    /**
+     * Scopes: role_operator, role_admin, role_owner
+     *
+     * @param array $data
+     * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
+     */
+    public function update($data = [])
+    {
+        $customerId = $this->getId();
+        $input = [];
+
+        if (isset($data['name'])) {
+            $input['name'] = $data['name'];
+        }
+
+        if (isset($data['organization'])) {
+            $input['organization'] = $data['organization'];
+        }
+
+        if (isset($data['timezone'])) {
+            $input['timezone'] = $data['timezone'];
+        }
+
+        if (isset($data['address'])) {
+            $input['address'] = $data['address'];
+        }
+
+        return $this->request->put(sprintf('customer/%1d', $customerId), $input);
     }
 
     /**
