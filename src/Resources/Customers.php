@@ -156,11 +156,10 @@ class Customers
     /**
      * Scopes: role_operator, role_admin, role_owner
      *
-     * @param string $name
      * @param array $data
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
-    public function update($name, $data = [])
+    public function update($data = [])
     {
         $customerId = $this->getId();
         $input = [];
@@ -179,6 +178,11 @@ class Customers
 
         if (isset($data['address'])) {
             $input['address'] = $data['address'];
+        }
+
+        if(isset($data['contact']) and isset($data['contactType'])) {
+            $input['contact'] = $data['contact'];
+            $input['contactType'] = $data['contactType'];
         }
 
         return $this->request->put(sprintf('customer/%1d', $customerId), $input);
