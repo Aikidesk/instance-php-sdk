@@ -26,8 +26,9 @@ class CustomersEmails
 
     /**
      * Customers Emails constructor.
-     * @param int $customerId
-     * @param int|null $emailId
+     *
+     * @param int                                               $customerId
+     * @param int|null                                          $emailId
      * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
      */
     public function __construct($customerId, $emailId = null, RequestInterface $request)
@@ -41,6 +42,7 @@ class CustomersEmails
      * Scopes: role_operator, role_admin, role_owner
      *
      * @param array $filter
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function all($filter = [])
@@ -73,6 +75,7 @@ class CustomersEmails
 
     /**
      * @param int|null $customerId
+     *
      * @return $this
      */
     public function setCustomerId($customerId)
@@ -86,14 +89,19 @@ class CustomersEmails
      * Scopes: role_operator, role_admin, role_owner
      *
      * @param string $email
-     * @param array $optional
+     * @param array  $optional
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function create($email, $optional = [])
     {
         $customerId = $this->getCustomerId();
         $input = [];
-        $input['email'] = $email;
+        $input['value'] = $email;
+
+        if (isset($optional['confirmed'])) {
+            $input['confirmed'] = (bool) $optional['confirmed'];
+        }
 
         return $this->request->post(sprintf('customer/%1d/email', $customerId), $input);
     }
@@ -102,6 +110,7 @@ class CustomersEmails
      * Scopes: role_operator, role_admin, role_owner
      *
      * @param array $optional
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function get($optional = [])
@@ -126,6 +135,7 @@ class CustomersEmails
 
     /**
      * @param int|null $emailId
+     *
      * @return $this
      */
     public function setEmailId($emailId)
@@ -137,7 +147,6 @@ class CustomersEmails
 
     /**
      * Scopes: role_operator, role_owner, role_admin
-     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function remove()
@@ -151,7 +160,6 @@ class CustomersEmails
 
     /**
      * Scopes: role_operator, role_owner, role_admin
-     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function reverify()
@@ -165,7 +173,6 @@ class CustomersEmails
 
     /**
      * Scopes: role_operator, role_owner, role_admin
-     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function makeDefault()
