@@ -16,12 +16,7 @@ class OAuth
      */
     private $request;
 
-    /**
-     * OAuth constructor.
-     * @param int|null $oauthId
-     * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     */
-    public function __construct($oauthId = null, RequestInterface $request)
+    public function __construct(RequestInterface $request, $oauthId = null)
     {
         $this->setOAuthId($oauthId);
         $this->request = $request;

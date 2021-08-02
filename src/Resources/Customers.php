@@ -30,18 +30,11 @@ class Customers
      */
     private $request;
 
-    /**
-     * Users constructor.
-     * @param int|null $customerId
-     * @param null $customerEmailResources
-     * @param null $customerAutologinResources
-     * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     */
     public function __construct(
+        RequestInterface $request,
         $customerId = null,
         $customerEmailResources = null,
-        $customerAutologinResources = null,
-        RequestInterface $request
+        $customerAutologinResources = null
     ) {
         $this->setId($customerId);
         $this->request = $request;

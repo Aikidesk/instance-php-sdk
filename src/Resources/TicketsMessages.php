@@ -24,13 +24,7 @@ class TicketsMessages
      */
     private $request;
 
-    /**
-     * Customers Emails constructor.
-     * @param int $ticketId
-     * @param int|null $messageId
-     * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     */
-    public function __construct($ticketId, $messageId = null, RequestInterface $request)
+    public function __construct(RequestInterface $request, $ticketId, $messageId = null)
     {
         $this->setTicketId($ticketId);
         $this->setMessageId($messageId);

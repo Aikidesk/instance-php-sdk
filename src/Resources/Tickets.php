@@ -24,13 +24,7 @@ class Tickets
      */
     private $request;
 
-    /**
-     * Tickets constructor.
-     * @param int|null $ticketId
-     * @param null $ticketMessageResources
-     * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     */
-    public function __construct($ticketId = null, $ticketMessageResources = null, RequestInterface $request)
+    public function __construct(RequestInterface $request, $ticketId = null, $ticketMessageResources = null)
     {
         $this->setId($ticketId);
         $this->request = $request;

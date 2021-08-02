@@ -24,14 +24,7 @@ class CustomersEmails
      */
     private $request;
 
-    /**
-     * Customers Emails constructor.
-     *
-     * @param int                                               $customerId
-     * @param int|null                                          $emailId
-     * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     */
-    public function __construct($customerId, $emailId = null, RequestInterface $request)
+    public function __construct(RequestInterface $request, $customerId, $emailId = null)
     {
         $this->setCustomerId($customerId);
         $this->setEmailId($emailId);

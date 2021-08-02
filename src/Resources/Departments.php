@@ -19,12 +19,7 @@ class Departments
      */
     private $request;
 
-    /**
-     * Departments constructor.
-     * @param int|null $departmentId
-     * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     */
-    public function __construct($departmentId = null, RequestInterface $request)
+    public function __construct(RequestInterface $request, $departmentId = null)
     {
         $this->setId($departmentId);
         $this->request = $request;

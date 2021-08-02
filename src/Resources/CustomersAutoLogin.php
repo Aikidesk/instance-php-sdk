@@ -24,13 +24,7 @@ class CustomersAutoLogin
      */
     private $request;
 
-    /**
-     * Customers Emails constructor.
-     * @param int $customerId
-     * @param int|null $autologinId
-     * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     */
-    public function __construct($customerId, $autologinId = null, RequestInterface $request)
+    public function __construct(RequestInterface $request, $customerId, $autologinId = null)
     {
         $this->setCustomerId($customerId);
         $this->setAutoLoginId($autologinId);

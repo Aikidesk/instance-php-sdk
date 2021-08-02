@@ -54,17 +54,6 @@ class Api implements InstanceSdkApiInterface
      */
     private $ticketsResources;
 
-    /**
-     * Api constructor.
-     * @param \Aikidesk\SDK\Instance\Contracts\RequestInterface $request
-     * @param null $customersResources
-     * @param null $staffResources
-     * @param null $departmentsResources
-     * @param null $statsResources
-     * @param null $settingsResources
-     * @param null $oauthResources
-     * @param null $ticketsResources
-     */
     public function __construct(
         RequestInterface $request,
         $customersResources = null,
@@ -76,24 +65,28 @@ class Api implements InstanceSdkApiInterface
         $ticketsResources = null
     ) {
         $this->request = $request;
-        $this->customersResources = $customersResources ?: new \Aikidesk\SDK\Instance\Resources\Customers(null, null,
-            null,
-            $this->request);
-        $this->staffResources = $staffResources ?: new \Aikidesk\SDK\Instance\Resources\Staff(null, $this->request);
+        $this->customersResources = $customersResources ?: new \Aikidesk\SDK\Instance\Resources\Customers(
+            $this->request, null, null, null
+        );
+        $this->staffResources = $staffResources ?: new \Aikidesk\SDK\Instance\Resources\Staff($this->request, null);
         $this->settingsResources = $settingsResources ?: new \Aikidesk\SDK\Instance\Resources\Settings($this->request);
-        $this->departmentsResources = $departmentsResources ?: new \Aikidesk\SDK\Instance\Resources\Departments(null,
-            $this->request);
+        $this->departmentsResources = $departmentsResources ?: new \Aikidesk\SDK\Instance\Resources\Departments(
+            $this->request,
+            null
+        );
         $this->statsResources = $statsResources ?: new \Aikidesk\SDK\Instance\Resources\Stats($this->request);
-        $this->oauthResources = $oauthResources ?: new \Aikidesk\SDK\Instance\Resources\OAuth(null, $this->request);
-        $this->ticketsResources = $ticketsResources ?: new \Aikidesk\SDK\Instance\Resources\Tickets(null, null,
-            $this->request);
+        $this->oauthResources = $oauthResources ?: new \Aikidesk\SDK\Instance\Resources\OAuth($this->request, null);
+        $this->ticketsResources = $ticketsResources ?: new \Aikidesk\SDK\Instance\Resources\Tickets(
+            $this->request, null, null
+        );
     }
 
     /**
-     * @param int $code
+     * @param int    $code
      * @param string $msg
      * @param string $url
-     * @param array $meta
+     * @param array  $meta
+     *
      * @throws \Aikidesk\SDK\Instance\Exceptions\ApiException
      * @throws \Aikidesk\SDK\Instance\Exceptions\BadRequestException
      * @throws \Aikidesk\SDK\Instance\Exceptions\ForbiddenException
@@ -146,6 +139,7 @@ class Api implements InstanceSdkApiInterface
 
     /**
      * @param int|null $customerId
+     *
      * @return \Aikidesk\SDK\Instance\Resources\Customers
      */
     public function customer($customerId = null)
@@ -157,6 +151,7 @@ class Api implements InstanceSdkApiInterface
 
     /**
      * @param int|null $departmentId
+     *
      * @return \Aikidesk\SDK\Instance\Resources\Departments
      */
     public function department($departmentId = null)
@@ -168,6 +163,7 @@ class Api implements InstanceSdkApiInterface
 
     /**
      * @param int|null $staffId
+     *
      * @return \Aikidesk\SDK\Instance\Resources\Staff
      */
     public function staff($staffId = null)
