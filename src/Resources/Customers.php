@@ -38,16 +38,21 @@ class Customers
     ) {
         $this->setId($customerId);
         $this->request = $request;
-        $this->customersEmailsResponse = $customerEmailResources ?: new \Aikidesk\SDK\Instance\Resources\CustomersEmails(null,
-            null, $this->request);
-        $this->customersAutologinResponse = $customerAutologinResources ?: new \Aikidesk\SDK\Instance\Resources\CustomersAutoLogin(null,
-            null, $this->request);
+        $this->customersEmailsResponse = $customerEmailResources ?: new \Aikidesk\SDK\Instance\Resources\CustomersEmails(
+            $this->request,
+            null, null
+        );
+        $this->customersAutologinResponse = $customerAutologinResources ?: new \Aikidesk\SDK\Instance\Resources\CustomersAutoLogin(
+            $this->request,
+            null, null
+        );
     }
 
     /**
      * Scopes: role_operator, role_admin, role_owner
      *
      * @param array $filter
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function all($filter = [])
@@ -94,7 +99,8 @@ class Customers
      *
      * @param string $name
      * @param string $email
-     * @param array $optional
+     * @param array  $optional
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function create($name, $email, $optional = [])
@@ -131,6 +137,7 @@ class Customers
      * Scopes: role_operator, role_admin, role_owner
      *
      * @param array $optional
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function get($optional = [])
@@ -144,12 +151,31 @@ class Customers
         return $this->request->get(sprintf('customer/%1d', $customerId), $input);
     }
 
+    /**
+     * @return int|null
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * @param int|null $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Scopes: role_operator, role_admin, role_owner
      *
      * @param array $data
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function update($data = [])
@@ -173,7 +199,7 @@ class Customers
             $input['address'] = $data['address'];
         }
 
-        if(isset($data['contact']) and isset($data['contactType'])) {
+        if (isset($data['contact']) and isset($data['contactType'])) {
             $input['contact'] = $data['contact'];
             $input['contactType'] = $data['contactType'];
         }
@@ -182,27 +208,7 @@ class Customers
     }
 
     /**
-     * @return int|null
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Scopes: role_operator, role_owner, role_admin
-     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function archive()
@@ -216,7 +222,6 @@ class Customers
 
     /**
      * Scopes: role_operator, role_owner, role_admin
-     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function unarchive()
@@ -232,6 +237,7 @@ class Customers
      * Scopes: role_operator, role_owner, role_admin
      *
      * @param array $tags
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function syncTags($tags = [])
@@ -246,9 +252,11 @@ class Customers
     /**
      * Scopes: role_operator, role_owner, role_admin
      * @TODO: TBD
+     *
      * @param string $action
-     * @param array $ids
-     * @param array $data
+     * @param array  $ids
+     * @param array  $data
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function mass($action, $ids, $data = [])
@@ -261,8 +269,10 @@ class Customers
     /**
      * Scopes: role_operator, role_owner, role_admin
      * @TODO: TBD
+     *
      * @param string $keyword_or_ids
      * @param string $type
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function autocomplete($keyword_or_ids, $type)
@@ -277,7 +287,6 @@ class Customers
 
     /**
      * Scopes: role_operator, role_owner, role_admin
-     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function generateNewPassword()
@@ -292,6 +301,7 @@ class Customers
      * Scopes: role_operator, role_owner, role_admin
      *
      * @param int|null $emailId
+     *
      * @return \Aikidesk\SDK\Instance\Resources\CustomersEmails
      */
     public function email($emailId = null)
@@ -319,6 +329,7 @@ class Customers
      * Scopes: role_operator, role_owner, role_admin, customer_autologin
      *
      * @param int|null $autologinId
+     *
      * @return \Aikidesk\SDK\Instance\Resources\CustomersAutoLogin
      */
     public function autologin($autologinId = null)
@@ -335,6 +346,7 @@ class Customers
      *
      * @param array $scopes
      * @param array $optional
+     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function oauthGrantInternal($scopes = [], $optional = [])
@@ -348,7 +360,6 @@ class Customers
 
     /**
      * Scopes: www
-     *
      * @return \Aikidesk\SDK\Instance\Contracts\ResponseInterface
      */
     public function activate()

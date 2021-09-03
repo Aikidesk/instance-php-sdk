@@ -28,8 +28,8 @@ class Tickets
     {
         $this->setId($ticketId);
         $this->request = $request;
-        $this->ticketsMessagesResources = $ticketMessageResources ?: new \Aikidesk\SDK\Instance\Resources\TicketsMessages(null,
-            null, $this->request);
+        $this->ticketsMessagesResources = $ticketMessageResources ?: new \Aikidesk\SDK\Instance\Resources\TicketsMessages($this->request,
+            null, null);
     }
 
     /**
