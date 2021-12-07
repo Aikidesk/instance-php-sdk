@@ -38,7 +38,7 @@ class GuzzleV6 implements RequestInterface
 
             return;
         }
-        $client = new Client(array('base_uri' => $baseUrl, 'timeout' => 5));
+        $client = new Client(array('base_uri' => $baseUrl, 'timeout' => 5, 'connect_timeout' => 1));
         $this->client = $client;
     }
 
